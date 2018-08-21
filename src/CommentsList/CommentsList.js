@@ -12,9 +12,9 @@ class CommentsList extends Component {
       comments: [],
       error: null,
       sortType: ((a,b) => a.id - b.id),
+      typeOfSort: 'byIdDown',
     };
-
-
+ 
 
 
   }
@@ -32,10 +32,24 @@ class CommentsList extends Component {
       .then(data => this.setState({ comments: data }))
       .catch(error => this.setState({ error }))
 
-      this.byId = e => {
+      this.byIdUp = e => {
         e.preventDefault()
         this.setState(
-            {sortType: ((a,b) => b.id - a.id)}
+            {
+              sortType: ((a,b) => b.id - a.id),
+              typeOfSort: 'byIdUp',
+            }
+
+          )
+      }
+
+      this.byIdDown = e => {
+        e.preventDefault()
+        this.setState(
+            {
+              sortType: ((a,b) => a.id - b.id),
+              typeOfSort: 'byIdDown'
+            }
           )
       }
 
@@ -64,7 +78,13 @@ class CommentsList extends Component {
         <Table striped bordered condensed hover>
           <thead>
             <tr>
-              <th onClick={this.byId} >#</th>
+              
+                {this.state.typeOfSort === 'byIdDown' ?
+               <th   onClick = { this.byIdUp } >#</th>
+                : 
+               <th  onClick = { this.byIdDown } >#</th>
+                }
+               
               <th onClick={this.byEmail} >Email</th>
               <th>Name</th>
             </tr>
