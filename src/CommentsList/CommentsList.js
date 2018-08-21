@@ -8,21 +8,34 @@ class CommentsList extends Component {
     super(props);
 
     this.state = {
-      comments: []
+      comments: [],
+      error: null,
     };
   }
 
   componentDidMount(){
 
     fetch(APIUrl)
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('There is error while fetching data.');
+        }
+      })
       .then(data => this.setState({ comments: data }))
+      .catch(error => this.setState({ error }))
   }
 
 
   render() {
 
-    const { comments } = this.state;
+    const { comments, error } = this.state;
+
+    if(error) {
+      return <p>{error.message}</p>;
+    }
+
 
     return (
       <div className="App">
