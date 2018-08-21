@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom';
 
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+
 import Home from '../Home/Home';
 import CommentsList from '../CommentsList/CommentsList';
 
@@ -15,12 +17,19 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <h2>My app</h2>
-          <Link to='/'>Home</Link>
-          <Link to='/comments' >Comments </Link>
 
-      
-          
+          <Navbar fluid inverse>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="/">home</a>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavItem eventKey={1} href="/comments">
+              Comments
+            </NavItem>
+          </Nav>
+          </Navbar>
       
           <Route exact path='/' component={Home}/>
           <Route path='/comments' component={CommentsList}/>
