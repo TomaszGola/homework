@@ -11,7 +11,12 @@ class CommentsList extends Component {
     this.state = {
       comments: [],
       error: null,
+      sortType: ((a,b) => a.id - b.id),
     };
+
+
+
+
   }
 
   componentDidMount(){
@@ -26,6 +31,20 @@ class CommentsList extends Component {
       })
       .then(data => this.setState({ comments: data }))
       .catch(error => this.setState({ error }))
+
+      this.byId = e => {
+        e.preventDefault()
+        this.setState(
+            {sortType: ((a,b) => b.id - a.id)}
+          )
+      }
+
+{/*      this.byEmail = e => {
+        e.preventDefault()
+        this.setState(
+            {sortType: ((a,b) => a.name - b.name)}
+          )
+      } */}
   }
 
 
@@ -38,19 +57,20 @@ class CommentsList extends Component {
     }
 
 
+
     return (
       <div className="App">
         <h2>List with comments</h2>
         <Table striped bordered condensed hover>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Email</th>
+              <th onClick={this.byId} >#</th>
+              <th onClick={this.byEmail} >Email</th>
               <th>Name</th>
             </tr>
           </thead>
           <tbody>
-            {comments.map(comment => 
+            {comments.sort(this.state.sortType).map(comment => 
               <tr key={comment.id}>
                 <td>{comment.id}</td>
                 <td>{comment.email}</td>
