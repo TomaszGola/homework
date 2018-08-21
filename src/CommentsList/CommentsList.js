@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap'
 
 const APIUrl = 'http://jsonplaceholder.typicode.com/comments'
 
@@ -40,13 +41,24 @@ class CommentsList extends Component {
     return (
       <div className="App">
         <h2>List with comments</h2>
-        <ul>
-          {  comments.map(comment => 
-            <li key={comment.id}>
-              <p>{comment.name}</p>
-           </li>
+        <Table striped bordered condensed hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comments.map(comment => 
+              <tr key={comment.id}>
+                <td>{comment.id}</td>
+                <td>{comment.email}</td>
+                <td>{comment.name}</td>
+              </tr>
             )}
-        </ul> 
+          </tbody>
+        </Table>
       </div>
     );
   }
