@@ -53,12 +53,25 @@ class CommentsList extends Component {
           )
       }
 
-{/*      this.byEmail = e => {
+      this.byEmailAlphabetically = e => {
         e.preventDefault()
         this.setState(
-            {sortType: ((a,b) => a.name - b.name)}
+            {
+              sortType: ((a,b) => a.email.localeCompare(b.email)),
+              typeOfSort: 'byEmailAlphabetically'
+            }
           )
-      } */}
+      } 
+      
+      this.byEmailNotAlphabetically = e => {
+        e.preventDefault()
+        this.setState(
+            {
+              sortType: ((a,b) => b.email.localeCompare(a.email)),
+              typeOfSort: 'byEmailNotAlphabetically'
+            }
+          )
+      }
   }
 
 
@@ -79,13 +92,21 @@ class CommentsList extends Component {
           <thead>
             <tr>
               
-                {this.state.typeOfSort === 'byIdDown' ?
-               <th   onClick = { this.byIdUp } >#</th>
+                {
+                  this.state.typeOfSort === 'byIdDown' ?
+                  <th   onClick = { this.byIdUp } >#</th>
                 : 
-               <th  onClick = { this.byIdDown } >#</th>
+                  <th  onClick = { this.byIdDown } >#</th>
                 }
-               
-              <th onClick={this.byEmail} >Email</th>
+              
+                {
+                  this.state.typeOfSort === 'byEmailAlphabetically' ?
+                  <th onClick={this.byEmailAlphabetically} >Email</th>
+                :
+                  <th onClick={this.byEmailNotAlphabetically} >Email</th>
+                }
+
+
               <th>Name</th>
             </tr>
           </thead>
