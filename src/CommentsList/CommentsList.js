@@ -128,11 +128,14 @@ class CommentsList extends Component {
           <tbody>
             { 
               comments.sort(this.state.sortType).map(comment => 
-                <tr key={comment.id}>
-                  <td>{comment.id}</td>
-                  <td>{comment.email}</td>
-                  <td>{comment.name}</td>
-                </tr>
+                comment.email.includes('.biz') ?
+                  <tr key={comment.id}>
+                    <td>{comment.id}</td>
+                    <td>{comment.email}</td>
+                    <td>{comment.name}</td>
+                  </tr>
+                :
+                  ''
               )
             }
           </tbody>
