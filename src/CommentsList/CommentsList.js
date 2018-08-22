@@ -12,7 +12,8 @@ class CommentsList extends Component {
       comments: [],
       error: null,
       sortType: ((a,b) => a.id - b.id),
-      typeOfSort: 'byIdDown',
+      sortedById: true,
+      sortedByEmail: null,
     };
  
 
@@ -32,12 +33,13 @@ class CommentsList extends Component {
       .then(data => this.setState({ comments: data }))
       .catch(error => this.setState({ error }))
 
+
       this.byIdUp = e => {
         e.preventDefault()
         this.setState(
             {
               sortType: ((a,b) => b.id - a.id),
-              typeOfSort: 'byIdUp',
+              sortedById: false,
             }
 
           )
@@ -48,7 +50,7 @@ class CommentsList extends Component {
         this.setState(
             {
               sortType: ((a,b) => a.id - b.id),
-              typeOfSort: 'byIdDown'
+              sortedById: true
             }
           )
       }
@@ -58,7 +60,7 @@ class CommentsList extends Component {
         this.setState(
             {
               sortType: ((a,b) => a.email.localeCompare(b.email)),
-              typeOfSort: 'byEmailAlphabetically'
+              sortedByEmail: false
             }
           )
       } 
@@ -68,7 +70,7 @@ class CommentsList extends Component {
         this.setState(
             {
               sortType: ((a,b) => b.email.localeCompare(a.email)),
-              typeOfSort: 'byEmailNotAlphabetically'
+              sortedByEmail: true
             }
           )
       }
@@ -93,14 +95,14 @@ class CommentsList extends Component {
             <tr>
               
                 {
-                  this.state.typeOfSort === 'byIdDown' ?
-                  <th   onClick = { this.byIdUp } >#</th>
-                : 
-                  <th  onClick = { this.byIdDown } >#</th>
+                  this.state.sortedById ?
+                    <th   onClick = { this.byIdUp } >#</th>
+                  :
+                    <th  onClick = { this.byIdDown } >#</th>
                 }
               
                 {
-                  this.state.typeOfSort === 'byEmailAlphabetically' ?
+                  this.state.sortedByEmail  ?
                   <th onClick={this.byEmailAlphabetically} >Email</th>
                 :
                   <th onClick={this.byEmailNotAlphabetically} >Email</th>
