@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap';
+import sortArrows from '../sort-arrows.svg'
 
 const APIUrl = 'http://jsonplaceholder.typicode.com/comments'
 
@@ -10,6 +11,7 @@ class CommentsList extends Component {
 
     this.state = {
       comments: [],
+      commentsLength: null,
       error: null,
       sortType: ((a,b) => a.id - b.id),
       sortedById: true,
@@ -27,11 +29,13 @@ class CommentsList extends Component {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('There is error while fetching data.');
+          throw new Error('There is error while fetching data. Status code: ', response.status);
         }
       })
-      .then(data => this.setState({ comments: data }))
+      .then(data => this.setState({ comments: data, commentsLength: data.length }))
       .catch(error => this.setState({ error }))
+      
+
 
 
       this.byIdUp = e => {
@@ -74,6 +78,7 @@ class CommentsList extends Component {
             }
           )
       }
+
   }
 
 
@@ -82,7 +87,7 @@ class CommentsList extends Component {
     const { comments, error } = this.state;
 
     if(error) {
-      return <p>{error.message}</p>;
+      return <p>{error.message + ' status code ' + error.status}</p>;
     }
 
 
@@ -96,16 +101,24 @@ class CommentsList extends Component {
               
                 {
                   this.state.sortedById ?
-                    <th   onClick = { this.byIdUp } >#</th>
+                    <th onClick = { this.byIdUp } >
+                      # <img src={sortArrows} height='10px' alt='sort arrows'/> 
+                    </th>
                   :
-                    <th  onClick = { this.byIdDown } >#</th>
+                    <th onClick = { this.byIdDown } >
+                      # <img src={sortArrows} height='10px' alt='sort arrows'/>
+                    </th>
                 }
               
                 {
                   this.state.sortedByEmail  ?
-                  <th onClick={this.byEmailAlphabetically} >Email</th>
-                :
-                  <th onClick={this.byEmailNotAlphabetically} >Email</th>
+                    <th onClick={this.byEmailAlphabetically} >
+                      Email <img src={sortArrows} height='10px' alt='sort arrows'/>
+                    </th>
+                  :
+                    <th onClick={this.byEmailNotAlphabetically} >
+                      Email <img src={sortArrows} height='10px' alt='sort arrows'/>
+                    </th>
                 }
 
 
@@ -113,13 +126,15 @@ class CommentsList extends Component {
             </tr>
           </thead>
           <tbody>
-            {comments.sort(this.state.sortType).map(comment => 
-              <tr key={comment.id}>
-                <td>{comment.id}</td>
-                <td>{comment.email}</td>
-                <td>{comment.name}</td>
-              </tr>
-            )}
+            { 
+              comments.sort(this.state.sortType).map(comment => 
+                <tr key={comment.id}>
+                  <td>{comment.id}</td>
+                  <td>{comment.email}</td>
+                  <td>{comment.name}</td>
+                </tr>
+              )
+            }
           </tbody>
         </Table>
       </div>
