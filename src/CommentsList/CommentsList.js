@@ -16,6 +16,7 @@ class CommentsList extends Component {
       sortType: ((a,b) => a.id - b.id),
       sortedById: true,
       sortedByEmail: null,
+      filtringDomain: '',
     };
  
 
@@ -79,6 +80,13 @@ class CommentsList extends Component {
           )
       }
 
+      this.filterByDomain = e => {
+        e.preventDefault()
+        this.setState({
+          filtringDomain: e.target.value
+        })
+      }
+
   }
 
 
@@ -94,7 +102,28 @@ class CommentsList extends Component {
 
     return (
       <div className="App">
-        <h2>List with comments</h2>
+        <h2>Table with comments</h2>
+        <div>
+        <p>Filtered by domain: </p>
+        
+        <select value={this.state.value} onChange={this.filterByDomain}>
+          <option value=''>all</option>
+          <option value=".biz">.biz</option>
+          <option value=".ca">.ca</option>
+          <option value=".co.uk">.co.uk</option>
+          <option value=".com">.com</option>
+          <option value=".info">.info</option>
+          <option value=".io">.io</option>
+          <option value=".me">.me</option>
+          <option value=".name">.name</option>
+          <option value=".net">.net</option>
+          <option value=".org">.org</option>
+          <option value=".tv">.tv</option>
+          <option value=".us">.us</option>
+        </select>
+        
+        </div>
+
         <Table striped bordered condensed hover>
           <thead>
             <tr>
@@ -128,7 +157,7 @@ class CommentsList extends Component {
           <tbody>
             { 
               comments.sort(this.state.sortType).map(comment => 
-                comment.email.includes('.biz') ?
+                comment.email.includes(this.state.filtringDomain) ?
                   <tr key={comment.id}>
                     <td>{comment.id}</td>
                     <td>{comment.email}</td>
