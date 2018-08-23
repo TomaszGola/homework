@@ -1,0 +1,9 @@
+.pagination-status {
+	list-style: none;
+	display: inline-flex;
+}
+
+.pagination-status__btn--active {
+	background-color: lightgreen;
+	border-color: green;
+}

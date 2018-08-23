@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { TablePagination } from 'react-pagination-table';
 
+import './CommentsList2.css'
+
 const APIUrl = 'http://jsonplaceholder.typicode.com/comments'
 
 
@@ -40,12 +42,11 @@ class CommentsList2 extends Component {
         <h2>Table with comments 2</h2>     
 
           <TablePagination
-            title = 'Table 2'
             headers = { HeaderOfTable }
             data = {this.state.comments2}
             columns = "id.email.name"
-            perPageItemCount = {10}
-            totalCount={this.state.comments2Length}
+            perPageItemCount = {15}
+            totalCount={500}
 
           />
       </div>

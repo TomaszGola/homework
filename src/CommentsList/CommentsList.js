@@ -84,6 +84,8 @@ class CommentsList extends Component {
         })
       }
 
+
+
   }
 
 
@@ -94,7 +96,6 @@ class CommentsList extends Component {
     if(error) {
       return <p>{error.message + ' status code ' + error.status}</p>;
     }
-
 
 
     return (
@@ -153,7 +154,7 @@ class CommentsList extends Component {
           </thead>
           <tbody>
             { 
-              comments.sort(this.state.sortType).map(comment => 
+              comments.sort(this.state.sortType).slice(10,20).map(comment => 
                 comment.email.includes(this.state.filtringDomain) ?
                   <tr key={comment.id}>
                     <td>{comment.id}</td>
