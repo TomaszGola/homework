@@ -18,9 +18,6 @@ class CommentsList extends Component {
       sortedByEmail: null,
       filtringDomain: '',
     };
- 
-
-
   }
 
   componentDidMount(){
