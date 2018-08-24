@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Gif from '../Gif/Gif';
 
 const APIUrl = 'http://api.giphy.com/v1/gifs/search?q=funny+animals&api_key=Y1Z2TMGf8Gzi6yKqaCw47sXRuAyQmBjH&limit=5'
 
@@ -33,10 +34,9 @@ render() {
 
 	return (
 		<div>
-			<h2>here will be gifs list</h2>
 			{
 				gifs.map(gif => 
-					<img key={gif.id} alt={gif.title} src={gif.images.fixed_width_downsampled.url}/>
+					<Gif key={gif.id} gif={gif}/>
 				)
 			}
 		</div>
