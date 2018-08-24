@@ -43,7 +43,7 @@ class CommentsList extends Component {
       }))
       .catch(error => this.setState({ error }))
       
-
+      localStorage.setItem('amountOfElementsOnPage', this.state.amountElementsOnPage)
 
 
       this.byIdUp = e => {
