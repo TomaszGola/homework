@@ -9,6 +9,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Home from '../Home/Home';
 import CommentsList from '../CommentsList/CommentsList';
 import CommentsList2 from '../CommentsList2/CommentsList2';
+import Gifs from '../Gifs/Gifs';
 
 import './App.css';
 
@@ -31,13 +32,16 @@ class App extends Component {
               <NavItem eventKey={2} href="/comments2">
                 Comments2
               </NavItem>
-
+              <NavItem eventKey={3} href="/gifs">
+                Gifs
+              </NavItem>
             </Nav>  
           </Navbar>
       
           <Route exact path='/' component={Home}/>
           <Route path='/comments' component={CommentsList}/>
           <Route path='/comments2' component={CommentsList2}/>
+          <Route path='/gifs' component={Gifs}/>
         </div>
       </Router>
     );
