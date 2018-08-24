@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './Gif.css'
+
 class Gif extends Component {
 
 	render() {
@@ -7,7 +9,7 @@ class Gif extends Component {
 		const gif = this.props.gif;
 
 		return(
-			<div>
+			<div className="Gif">
 				<img alt={gif.title} src={gif.images.fixed_width_downsampled.url}/>
 			</div>
 		)

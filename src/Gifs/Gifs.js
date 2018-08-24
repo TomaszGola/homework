@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Gif from '../Gif/Gif';
 
-const APIUrl = 'http://api.giphy.com/v1/gifs/search?q=funny+animals&api_key=Y1Z2TMGf8Gzi6yKqaCw47sXRuAyQmBjH&limit=5'
+
+const APIUrl = 'http://api.giphy.com/v1/gifs/search?q=funny+animals&api_key=Y1Z2TMGf8Gzi6yKqaCw47sXRuAyQmBjH&limit=10'
 
 class Gifs extends Component {
 	constructor(props) {
