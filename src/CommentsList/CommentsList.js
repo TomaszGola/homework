@@ -89,21 +89,35 @@ class CommentsList extends Component {
 
       this.prevPage = e => {
         e.preventDefault()
-        this.setState({
-          firstElementOnPage: this.state.firstElementOnPage - this.state.amountElementsOnPage,
-          lastElementOnPage: this.state.lastElementOnPage - this.state.amountElementsOnPage
-        })
+        {
+          this.state.firstElementOnPage <= 0 ?
+            this.setState({
+              firstElementOnPage: 0,
+              lastElementOnPage: 0 + this.state.amountElementsOnPage              
+            })
+          :
+            this.setState({
+              firstElementOnPage: this.state.firstElementOnPage - this.state.amountElementsOnPage,
+              lastElementOnPage: this.state.lastElementOnPage - this.state.amountElementsOnPage                 
+            })  
+        }
       }
 
       this.nextPage = e => {
         e.preventDefault()
-        this.setState({
-          firstElementOnPage: this.state.firstElementOnPage + this.state.amountElementsOnPage,
-          lastElementOnPage: this.state.lastElementOnPage + this.state.amountElementsOnPage
-        })
+        {
+          this.state.lastElementOnPage >= this.state.commentsLength ?
+            this.setState({
+              firstElementOnPage: this.state.commentsLength - this.state.amountElementsOnPage,
+              lastElementOnPage: this.state.commentsLength
+            })
+          :
+            this.setState({
+              firstElementOnPage: this.state.firstElementOnPage + this.state.amountElementsOnPage,
+              lastElementOnPage: this.state.lastElementOnPage + this.state.amountElementsOnPage              
+            })  
+        }
       }
-
-
 
   }
 
