@@ -103,7 +103,9 @@ class CommentsList extends Component {
 
         this.setState({
             commentsAfterFiltring: temporaryTable,
-            commentsAfterFiltringLength: temporaryTable.length
+            commentsAfterFiltringLength: temporaryTable.length,
+            firstElementOnPage: 0,
+            lastElementOnPage: this.state.amountElementsOnPage
           })
       }
 
