@@ -6,7 +6,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <h1>Hello at my app!</h1>
-        <img src='https://media.giphy.com/media/26xBwdIuRJiAIqHwA/source.gif'/>
+        <img alt='hello gif' src='https://media.giphy.com/media/26xBwdIuRJiAIqHwA/source.gif'/>
       </div>
     );
   }
