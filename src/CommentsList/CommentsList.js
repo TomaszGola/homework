@@ -17,6 +17,9 @@ class CommentsList extends Component {
       sortedById: true,
       sortedByEmail: null,
       filtringDomain: '',
+      firstElementOnPage: 0,
+      lastElementOnPage: 20,
+      amountElementsOnPage: 20,
     };
   }
 
@@ -81,6 +84,22 @@ class CommentsList extends Component {
         e.preventDefault()
         this.setState({
           filtringDomain: e.target.value
+        })
+      }
+
+      this.prevPage = e => {
+        e.preventDefault()
+        this.setState({
+          firstElementOnPage: this.state.firstElementOnPage - this.state.amountElementsOnPage,
+          lastElementOnPage: this.state.lastElementOnPage - this.state.amountElementsOnPage
+        })
+      }
+
+      this.nextPage = e => {
+        e.preventDefault()
+        this.setState({
+          firstElementOnPage: this.state.firstElementOnPage + this.state.amountElementsOnPage,
+          lastElementOnPage: this.state.lastElementOnPage + this.state.amountElementsOnPage
         })
       }
 
@@ -154,19 +173,23 @@ class CommentsList extends Component {
           </thead>
           <tbody>
             { 
-              comments.sort(this.state.sortType).slice(10,20).map(comment => 
-                comment.email.includes(this.state.filtringDomain) ?
-                  <tr key={comment.id}>
-                    <td>{comment.id}</td>
-                    <td>{comment.email}</td>
-                    <td>{comment.name}</td>
-                  </tr>
-                :
-                  ''
-              )
+              comments.sort(this.state.sortType)
+                .slice( this.state.firstElementOnPage , this.state.lastElementOnPage )
+                  .map(comment => 
+                    comment.email.includes(this.state.filtringDomain) ?
+                      <tr key={comment.id}>
+                        <td>{comment.id}</td>
+                        <td>{comment.email}</td>
+                        <td>{comment.name}</td>
+                      </tr>
+                    :
+                      ''
+                    )
             }
           </tbody>
         </Table>
+        <button onClick={this.prevPage}>prev</button>
+        <button onClick={this.nextPage}>next</button>        
       </div>
     );
   }
