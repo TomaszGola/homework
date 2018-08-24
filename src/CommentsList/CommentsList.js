@@ -12,6 +12,8 @@ class CommentsList extends Component {
     this.state = {
       comments: [],
       commentsLength: null,
+      commentsAfterFiltring: [],
+      commentsAfterFiltringLength: null,
       error: null,
       sortType: ((a,b) => a.id - b.id),
       sortedById: true,
@@ -33,7 +35,12 @@ class CommentsList extends Component {
           throw new Error('There is error while fetching data. Status code: ', response.status);
         }
       })
-      .then(data => this.setState({ comments: data, commentsLength: data.length }))
+      .then(data => this.setState({ 
+        comments: data, 
+        commentsLength: data.length,
+        commentsAfterFiltring: data,
+        commentsAfterFiltringLength: data.length 
+      }))
       .catch(error => this.setState({ error }))
       
 
@@ -41,6 +48,7 @@ class CommentsList extends Component {
 
       this.byIdUp = e => {
         e.preventDefault()
+
         this.setState(
             {
               sortType: ((a,b) => b.id - a.id),
@@ -81,16 +89,28 @@ class CommentsList extends Component {
       }
 
       this.filterByDomain = e => {
+        let temporaryTable = []
+
         e.preventDefault()
+        
+        this.state.comments.map(
+              comment =>
+              comment.email.includes(e.target.value) ?
+              temporaryTable.push(comment)
+            :
+              ''
+          )
+
         this.setState({
-          filtringDomain: e.target.value
-        })
+            commentsAfterFiltring: temporaryTable,
+            commentsAfterFiltringLength: temporaryTable.length
+          })
       }
 
       this.prevPage = e => {
         e.preventDefault()
-        {
-          this.state.firstElementOnPage <= 0 ?
+        
+          this.state.firstElementOnPage <= 0 + this.state.amountElementsOnPage - 1 ?
             this.setState({
               firstElementOnPage: 0,
               lastElementOnPage: 0 + this.state.amountElementsOnPage              
@@ -100,23 +120,23 @@ class CommentsList extends Component {
               firstElementOnPage: this.state.firstElementOnPage - this.state.amountElementsOnPage,
               lastElementOnPage: this.state.lastElementOnPage - this.state.amountElementsOnPage                 
             })  
-        }
+        
       }
 
       this.nextPage = e => {
         e.preventDefault()
-        {
-          this.state.lastElementOnPage >= this.state.commentsLength ?
+        
+          this.state.lastElementOnPage >= this.state.commentsAfterFiltringLength - this.state.amountElementsOnPage + 1 ?
             this.setState({
-              firstElementOnPage: this.state.commentsLength - this.state.amountElementsOnPage,
-              lastElementOnPage: this.state.commentsLength
+              firstElementOnPage: this.state.commentsAfterFiltringLength - this.state.amountElementsOnPage,
+              lastElementOnPage: this.state.commentsAfterFiltringLength
             })
           :
             this.setState({
               firstElementOnPage: this.state.firstElementOnPage + this.state.amountElementsOnPage,
               lastElementOnPage: this.state.lastElementOnPage + this.state.amountElementsOnPage              
             })  
-        }
+        
       }
 
   }
@@ -124,7 +144,7 @@ class CommentsList extends Component {
 
   render() {
 
-    const { comments, error } = this.state;
+    const { error, commentsAfterFiltring } = this.state;
 
     if(error) {
       return <p>{error.message + ' status code ' + error.status}</p>;
@@ -187,18 +207,15 @@ class CommentsList extends Component {
           </thead>
           <tbody>
             { 
-              comments.sort(this.state.sortType)
+              commentsAfterFiltring.sort(this.state.sortType)
                 .slice( this.state.firstElementOnPage , this.state.lastElementOnPage )
                   .map(comment => 
-                    comment.email.includes(this.state.filtringDomain) ?
                       <tr key={comment.id}>
                         <td>{comment.id}</td>
                         <td>{comment.email}</td>
                         <td>{comment.name}</td>
                       </tr>
-                    :
-                      ''
-                    )
+                    )  
             }
           </tbody>
         </Table>
